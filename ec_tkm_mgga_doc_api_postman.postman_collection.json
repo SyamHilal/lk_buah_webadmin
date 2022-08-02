@@ -1,0 +1,310 @@
+{
+	"info": {
+		"_postman_id": "3443dc1d-58d5-45ea-972c-77713f8c642c",
+		"name": "ec_tkm_mgga_doc_api_postman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ec-tkm.test/api/showalamat",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "ec-tkm.test/api/showalamat",
+					"host": [
+						"ec-tkm",
+						"test"
+					],
+					"path": [
+						"api",
+						"showalamat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ec-tkm.test/api/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Dimus",
+							"type": "default"
+						},
+						{
+							"key": "email",
+							"value": "masdim@yopmail.com",
+							"type": "default"
+						},
+						{
+							"key": "role",
+							"value": "customer",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "musang",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "ec-tkm.test/api/register",
+					"host": [
+						"ec-tkm",
+						"test"
+					],
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ec-tkm.test/api/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "dimus@mail-mail.com",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "kucing",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "ec-tkm.test/api/login",
+					"host": [
+						"ec-tkm",
+						"test"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ec-tkm.test/api/updateUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "2",
+							"type": "default"
+						},
+						{
+							"key": "name",
+							"value": "Danto",
+							"type": "default"
+						},
+						{
+							"key": "email",
+							"value": "dimus@mail-mail.com",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "kucing",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "ec-tkm.test/api/updateUser",
+					"host": [
+						"ec-tkm",
+						"test"
+					],
+					"path": [
+						"api",
+						"updateUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ec-tkm.test/api/showproduct",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "ec-tkm.test/api/showproduct",
+					"host": [
+						"ec-tkm",
+						"test"
+					],
+					"path": [
+						"api",
+						"showproduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ec-tkm.test/api/cariproduct",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "cari",
+							"value": "arum",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "ec-tkm.test/api/cariproduct",
+					"host": [
+						"ec-tkm",
+						"test"
+					],
+					"path": [
+						"api",
+						"cariproduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ec-tkm.test/api/simpankranjang",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "user_id",
+							"value": "2",
+							"type": "default"
+						},
+						{
+							"key": "products_id",
+							"value": "2",
+							"type": "default"
+						},
+						{
+							"key": "qty",
+							"value": "1",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "ec-tkm.test/api/simpankranjang",
+					"host": [
+						"ec-tkm",
+						"test"
+					],
+					"path": [
+						"api",
+						"simpankranjang"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ec-tkm.test/api/showkranjang",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "user_id",
+							"value": "2",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "ec-tkm.test/api/showkranjang",
+					"host": [
+						"ec-tkm",
+						"test"
+					],
+					"path": [
+						"api",
+						"showkranjang"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ec-tkm.test/api/updatekranjang",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id[]",
+							"value": "2",
+							"type": "default"
+						},
+						{
+							"key": "qty[]",
+							"value": "5",
+							"type": "default"
+						},
+						{
+							"key": "id[]",
+							"value": "1",
+							"type": "default"
+						},
+						{
+							"key": "qty[]",
+							"value": "1",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "ec-tkm.test/api/updatekranjang",
+					"host": [
+						"ec-tkm",
+						"test"
+					],
+					"path": [
+						"api",
+						"updatekranjang"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
