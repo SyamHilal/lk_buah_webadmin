@@ -107,7 +107,7 @@ class TransaksiController extends Controller
                     // dd($orderDetail);
                     $total=0;
                     foreach ($order as $key => $value) {
-                        $orderDetail = DB::table('order')
+                        $orderDetail = DB::table('products')
                     
                     ->join('detail_order','detail_order.order_id','=','order.id')
                     ->join('products','detail_order.product_id','=','products.id','LEFT')
