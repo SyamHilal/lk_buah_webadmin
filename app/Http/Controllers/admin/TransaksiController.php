@@ -17,6 +17,8 @@ class TransaksiController extends Controller
                     ->select('order.*','status_order.name','users.name as nama_pemesan')
                     ->where('order.status_order_id',1)
                     ->get();
+
+
         $data = array(
             'orderbaru' => $order
         );
@@ -78,17 +80,55 @@ class TransaksiController extends Controller
         return view('admin.transaksi.perludikirim',$data);
     }
 
-    public function selesai()
+    public function selesai(Request $request)
     {
         //ambil data order yang status nya 5 barang sudah diterima pelangan
+            // dd($request->some_param);
+            if($request->has('some_param')){
+                $order = DB::table('order')
+                ->join('status_order','status_order.id','=','order.status_order_id')
+                ->join('users','users.id','=','order.user_id')
+                ->select('order.*','status_order.name','users.name as nama_pemesan')
+                ->whereMonth('order.updated_at',$request->some_param)
+                ->where('order.status_order_id',5)
+                
+                ->get();
+                return response()->json([
+                    'data' => $order
+                ]);
+            }
         $order = DB::table('order')
                     ->join('status_order','status_order.id','=','order.status_order_id')
                     ->join('users','users.id','=','order.user_id')
                     ->select('order.*','status_order.name','users.name as nama_pemesan')
                     ->where('order.status_order_id',5)
                     ->get();
+        
+                    // dd($orderDetail);
+                    $total=0;
+                    foreach ($order as $key => $value) {
+                        $orderDetail = DB::table('order')
+                    
+                    ->join('detail_order','detail_order.order_id','=','order.id')
+                    ->join('products','detail_order.product_id','=','products.id','LEFT')
+                    ->select('detail_order.*','products.price_awal')
+                    ->where('order.status_order_id',5)
+                    ->where('order.id',$value->id)
+                    ->get();
+                    // dd($orderDetail);
+                    foreach ($orderDetail as $key => $item) {
+                        if(empty($item->price_awal)){
+                            $total=$item->price - 0;
+                        }else{
+                            $total=$item->price - $item->price_awal;
+                        }
+                    }
+                    $total=$total-$value->ongkir;
+                    }
+                    
         $data = array(
-            'orderbaru' => $order
+            'orderbaru' => $order,
+            'total_pendapatan' => $total
         );
 
         return view('admin.transaksi.selesai',$data);

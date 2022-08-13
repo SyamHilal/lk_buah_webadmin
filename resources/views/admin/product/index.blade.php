@@ -26,7 +26,8 @@
                           <tr>
                             <th width="5%">No</th>
                             <th>Nama Produk</th>
-                            <th>Harga</th>
+                            <th>Harga Awal</th>
+                            <th>Harga Jual</th>
                             <th>Berat</th>
                             <th>Stok</th>
                             <th>Unit</th>
@@ -45,19 +46,20 @@
                             <tr>
                                 <td align="center">{{ ++$key}}</td>
                                 <td>{{ $product->name }}</td>
+                                <td>{{ $product->price_awal }}</td>
                                 <td>{{ $product->price }}</td>
                                 <td>{{ $product->weigth }}gr</td>
                                 <td>{{ $product->stok }}</td>
                                 <td>{{ $product->unit }}</td>
-                                <td><img src="{{ asset('storage/app/public/'.$product->image) }}" alt="" ></td>
+                                <td><img src="{{ asset('storage/'.$product->image) }}" alt="" ></td>
                                 <td align="center">
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                   <a href="{{ route('admin.product.edit',['id'=>$product->id]) }}" class="btn btn-warning btn-sm">
                                     <i class="mdi mdi-tooltip-edit"></i>
                                   </a>
-                                  <a href="{{ route('admin.product.delete',['id'=>$product->id]) }}" onclick="return confirm('Yakin Hapus data')" class="btn btn-danger btn-sm">
+                                  {{-- <a href="{{ route('admin.product.delete',['id'=>$product->id]) }}" onclick="return confirm('Yakin Hapus data')" class="btn btn-danger btn-sm">
                                     <i class="mdi mdi-delete-forever"></i>
-                                  </a>
+                                  </a> --}}
                                 </div>
                                 </td>
                             </tr>
