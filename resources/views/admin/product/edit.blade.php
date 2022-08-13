@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="form-group">
                                 <label for="exampleInputUsername1">Stok</label>
-                                <input required type="number" class="form-control" name="stok" value="{{ $product->stok}}" readonly>
+                                <input required type="number" class="form-control" name="stok" value="{{ $product->stok}}">
                                 </div>
                                 <div class="form-group">
                                   <select class="form-control" name="unit">
