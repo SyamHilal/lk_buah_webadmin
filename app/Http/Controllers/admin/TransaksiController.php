@@ -115,7 +115,7 @@ class TransaksiController extends Controller
                     ->where('order.status_order_id',5)
                     ->where('order.id',$value->id)
                     ->get();
-                    // dd($orderDetail);
+                    dd($orderDetail);
                     foreach ($orderDetail as $key => $item) {
                         if(empty($item->subtotal)){
                             $total=$item->subtotal - 0;
@@ -123,7 +123,6 @@ class TransaksiController extends Controller
                             $total=$item->subtotal - $item->price_awal;
                         }
                     }
-                    $total=$total-$value->ongkir;
                     }
                     
         $data = array(
