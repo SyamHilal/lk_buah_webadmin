@@ -8,5 +8,5 @@ class Product extends Model
 {
     //
     protected $table = 'products';
-    protected $fillable = ['name','image','description','price','weigth','stok','unit'];
+    protected $fillable = ['name','image','description','price','price_awal','weigth','stok','unit'];
 }
