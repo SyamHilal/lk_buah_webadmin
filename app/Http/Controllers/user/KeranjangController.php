@@ -48,7 +48,8 @@ class KeranjangController extends Controller
         $add = Keranjang::create([
             'user_id' => $request->user_id,
             'products_id' => $request->products_id,
-            'qty' => $request->qty
+            'qty' => $request->qty,
+            'price' => $request->price
         ]);
 
         return response()->json([
@@ -64,7 +65,8 @@ class KeranjangController extends Controller
 
         Keranjang::where(
             'products_id',$request->product_id)->update([
-                'qty' => $request->qty
+                'qty' => $request->qty,
+                'price' => $request->price
             ]);
         
         return response()->json([
