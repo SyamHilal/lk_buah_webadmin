@@ -107,7 +107,7 @@ class TransaksiController extends Controller
                     // dd($orderDetail);
                     $total=0;
                     foreach ($order as $key => $value) {
-                        $orderDetail = DB::table('products')
+                        $orderDetail = DB::table('order')
                     
                     ->join('detail_order','detail_order.order_id','=','order.id')
                     ->join('products','detail_order.product_id','=','products.id','LEFT')
@@ -115,7 +115,7 @@ class TransaksiController extends Controller
                     ->where('order.status_order_id',5)
                     ->where('order.id',$value->id)
                     ->get();
-                    // dd($orderDetail);
+                    dd($orderDetail);
                     foreach ($orderDetail as $key => $item) {
                         if(empty($item->price_awal)){
                             $total=$item->price - 0;
