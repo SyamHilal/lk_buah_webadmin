@@ -262,6 +262,7 @@ class OrderController extends Controller
                         'order_id' => $order->id,
                         'product_id' => $brg->products_id,
                         'qty' => $brg->qty,
+                        'price' => $brg->price,
                     ]);
                     $product=Product::where('id',$brg->products_id)->first();
                     Product::where('id',$brg->products_id)->update([
