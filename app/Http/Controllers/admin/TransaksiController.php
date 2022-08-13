@@ -111,7 +111,7 @@ class TransaksiController extends Controller
                     
                     ->join('detail_order','detail_order.order_id','=','order.id')
                     ->join('products','detail_order.product_id','=','products.id','LEFT')
-                    ->select('detail_order.*','products.price_awal')
+                    ->select('subtotal','products.price_awal')
                     ->where('order.status_order_id',5)
                     ->where('order.id',$value->id)
                     ->get();
