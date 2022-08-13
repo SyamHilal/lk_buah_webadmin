@@ -41,19 +41,18 @@ class DashboardController extends Controller
                         
                         ->join('detail_order','detail_order.order_id','=','order.id')
                         ->join('products','detail_order.product_id','=','products.id','LEFT')
-                        ->select('detail_order.*','products.price_awal')
+                        ->select('subtotal','products.price_awal')
                         ->where('order.status_order_id',5)
                         ->where('order.id',$value->id)
                         ->get();
                         // dd($orderDetail);
                         foreach ($orderDetail as $key => $item) {
                             if(empty($item->price_awal)){
-                                $total=$item->price - 0;
+                                $total=$item->subtotal - 0;
                             }else{
-                                $total=$item->price - $item->price_awal;
+                                $total=$item->subtotal - $item->price_awal;
                             }
                         }
-                        $total=$total-$value->ongkir;
                         }
                         
         $data = array(
