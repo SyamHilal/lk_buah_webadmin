@@ -117,7 +117,7 @@ class TransaksiController extends Controller
                     ->get();
                     dd($orderDetail);
                     foreach ($orderDetail as $key => $item) {
-                        if(empty($item->price_awal)){
+                        if(empty($item->subtotal)){
                             $total=$item->price - 0;
                         }else{
                             $total=$item->price - $item->price_awal;
