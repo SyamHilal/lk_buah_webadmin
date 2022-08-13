@@ -34,7 +34,11 @@
                                 <input required type="number" class="form-control" name="weigth">
                                 </div>
                                 <div class="form-group">
-                                <label for="exampleInputUsername1">Harga</label>
+                                  <label for="exampleInputUsername1">Harga Awal</label>
+                                  <input required type="number" class="form-control" name="price_awal" value="{{ $product->price_awal}}">
+                                  </div>
+                                <div class="form-group">
+                                <label for="exampleInputUsername1">Harga Jual</label>
                                 <input required type="number" class="form-control" name="price">
                                 </div>
                                 <div class="form-group">

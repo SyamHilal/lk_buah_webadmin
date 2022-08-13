@@ -44,6 +44,7 @@ use Illuminate\Support\Facades\DB;
                 'name' => $request->name,
                 'description' => $request->description,
                 'price' => $request->price,
+                'price_awal' => $request->price_awal,
                 'stok' => $request->stok,
                 'weigth' => $request->weigth,
                 'unit' => $request->unit, 
@@ -83,6 +84,7 @@ use Illuminate\Support\Facades\DB;
         $prod->name = $request->name;
         $prod->description = $request->description;
         $prod->price = $request->price;
+        $prod->price_awal = $request->price_awal;
         $prod->weigth = $request->weigth;
         $prod->unit = $request->unit;
         $prod->categories_id = $request->categories_id;

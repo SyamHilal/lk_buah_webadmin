@@ -30,15 +30,19 @@
                                 </div>
                                 <div class="form-group">
                                 <label for="exampleInputUsername1">Berat (gram)</label>
-                                <input required type="number" class="form-control" name="weigth" value="{{ $product->weigth}}">
+                                <input required type="number" class="form-control" name="weigth" value="{{ $product->weigth}}" readonly>
                                 </div>
                                 <div class="form-group">
-                                <label for="exampleInputUsername1">Harga</label>
+                                <label for="exampleInputUsername1">Harga Awal</label>
+                                <input required type="number" class="form-control" name="price_awal" value="{{ $product->price_awal}}">
+                                </div>
+                                <div class="form-group">
+                                <label for="exampleInputUsername1">Harga Jual</label>
                                 <input required type="number" class="form-control" name="price" value="{{ $product->price}}">
                                 </div>
                                 <div class="form-group">
                                 <label for="exampleInputUsername1">Stok</label>
-                                <input required type="number" class="form-control" name="stok" value="{{ $product->stok}}">
+                                <input required type="number" class="form-control" name="stok" value="{{ $product->stok}}" readonly>
                                 </div>
                                 <div class="form-group">
                                   <select class="form-control" name="unit">
