@@ -118,9 +118,9 @@ class TransaksiController extends Controller
                     dd($orderDetail);
                     foreach ($orderDetail as $key => $item) {
                         if(empty($item->subtotal)){
-                            $total=$item->price - 0;
+                            $total=$item->subtotal - 0;
                         }else{
-                            $total=$item->price - $item->price_awal;
+                            $total=$item->subtotal - $item->price_awal;
                         }
                     }
                     $total=$total-$value->ongkir;
