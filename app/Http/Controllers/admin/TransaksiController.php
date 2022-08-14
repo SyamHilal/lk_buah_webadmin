@@ -145,7 +145,8 @@ class TransaksiController extends Controller
         $order = DB::table('order')
                     ->join('status_order','status_order.id','=','order.status_order_id')
                     ->join('users','users.id','=','order.user_id')
-                    ->select('order.*','status_order.name','users.name as nama_pemesan')
+                    ->join('detail_order','detail_order.order_id','=','order.id')
+                    ->select('order.*','status_order.name','detail_order.qty','users.name as nama_pemesan')
                     ->where('order.status_order_id',5)
                     ->get();
 
@@ -156,7 +157,7 @@ class TransaksiController extends Controller
                      
                      ->join('detail_order','detail_order.order_id','=','order.id')
                      ->join('products','detail_order.product_id','=','products.id','LEFT')
-                     ->select('subtotal','detail_order.qty','products.price_awal')
+                     ->select('subtotal','detail_order.qty','products.*')
                      ->where('order.status_order_id',5)
                      ->where('order.id',$value->id)
                      ->get();
@@ -165,17 +166,22 @@ class TransaksiController extends Controller
                         if(empty($item->subtotal)){
                             // $total=$item->subtotal - 0;
                         }else{
-                            $qty = DB::table('detail_order')->sum('qty');
-                            $total_price = $qty * $item->price_awal;
+                            // $qty = DB::table('detail_order')->sum('qty');
+                            // $total_price = $qty * $item->price_awal;
                         }
+                        $qty = $order->sum('qty');
+                        $total_price = $qty * $item->price_awal;
+                        $subtotal = $order->sum('subtotal');
+                        $total=$subtotal - $total_price;
                         $subtotal = DB::table('order')->sum('subtotal');
                         $total=$subtotal - $total_price;
-                        // dd($qty);
+                        // dd($order);
                     }
                 }
         $data = array(
             'laporan' =>$order,
             'jual' =>$subtotal,
+            'detail' =>$orderDetail,
             'untung' =>$total
         );
                     return view('admin.transaksi.cetak',$data);           
