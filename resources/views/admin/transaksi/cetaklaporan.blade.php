@@ -80,7 +80,7 @@
 		<tr>
 			<td></td>
 			<td width="200px">
-				<p>PangkalanBun, <?= date("d M Y") ?> <br> Pemilik</p>
+				<p>Indramayu, <?= date("d M Y") ?> <br> Pemilik</p>
 				<br>
 				<br>
 				<br>
