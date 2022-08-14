@@ -65,6 +65,7 @@ Route::group(['middleware' => ['auth','checkRole:admin']],function(){
     Route::post('/admin/transaksi/inputresi/{id}','admin\TransaksiController@inputresi')->name('admin.transaksi.inputresi');
     Route::get('/admin/transaksi/selesai','admin\TransaksiController@selesai')->name('admin.transaksi.selesai');
     Route::get('/admin/transaksi/cetak','admin\TransaksiController@cetak')->name('admin.transaksi.cetak');
+    Route::get('/admin/transaksi/cetakAll','admin\TransaksiController@cetakAll')->name('admin.transaksi.cetakAll');
     Route::get('/admin/transaksi/dibatalkan','admin\TransaksiController@dibatalkan')->name('admin.transaksi.dibatalkan');
 
     Route::get('/admin/rekening','admin\RekeningController@index')->name('admin.rekening');

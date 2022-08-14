@@ -64,6 +64,9 @@
                           </form>
                         </div>
                         <div class="table-responsive">
+                            <a href="{{ route('admin.transaksi.cetakAll') }}" class="btn btn-info btn-sm">
+                                <i class="mdi mdi-printer">Print</i>
+                              </a>
                             <table class="table table-bordered table-hovered" id="tableSelesai">
                                 <thead>
                                     <tr>
@@ -126,23 +129,7 @@
         $(document).ready(function() {
             var t = $('#tableSelesai').DataTable({
                 dom: 'Bfrtip',  
-                buttons: [{
-                        extend: 'print',
-                        orientation: 'landscape',
-                        pageSize: 'LEGAL',
-                        exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-                        }
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        orientation: 'landscape',
-                        pageSize: 'LEGAL',
-                        exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-                        }
-                    },
-                    'colvis'
+                buttons: [
                 ],
                 "columnDefs": [{
                     "searchable": false,
