@@ -190,8 +190,9 @@ class TransaksiController extends Controller
         // dd($lap_order);
         $order = DB::table('order')
                     ->join('status_order','status_order.id','=','order.status_order_id')
+                    ->join('detail_order','detail_order.order_id','=','order.id')
                     ->join('users','users.id','=','order.user_id')
-                    ->select('order.*','status_order.name','users.name as nama_pemesan')
+                    ->select('order.*','detail_order.qty','status_order.name','users.name as nama_pemesan')
                     ->where('order.status_order_id',5)
                     ->whereYear('order.created_at', '=', $year)
                     ->whereMonth('order.created_at', '=', $month)
@@ -207,16 +208,20 @@ class TransaksiController extends Controller
                      ->select('subtotal','detail_order.qty','products.price_awal')
                      ->where('order.status_order_id',5)
                      ->where('order.id',$value->id)
+                     ->whereYear('order.created_at', '=', $year)
+                     ->whereMonth('order.created_at', '=', $month)
                      ->get();
                     // dd($order);
                     foreach ($orderDetail as $key => $item) {
                         if(empty($item->subtotal)){
                             // $total=$item->subtotal - 0;
                         }else{
-                            $qty = DB::table('detail_order')->sum('qty');
-                            $total_price = $qty * $item->price_awal;
+                            
+                            
                         }
-                        $subtotal = DB::table('order')->sum('subtotal');
+                        $qty = $order->sum('qty');
+                        $total_price = $qty * $item->price_awal;
+                        $subtotal = $order->sum('subtotal');
                         $total=$subtotal - $total_price;
                         // dd($qty);
                     }

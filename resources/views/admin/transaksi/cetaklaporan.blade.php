@@ -51,7 +51,7 @@
 				<th>No Invoice</th>
 				<th>Pemesan</th>
 				{{-- <th>Catatan</th> --}}
-				<th>Subtotal</th>
+				<th>Nama Produk</th>
 				<th>Ongkir</th>
 				<th>Total Pesanan</th>
 				{{-- <th>Total Pendapatan/Laba</th> --}}
