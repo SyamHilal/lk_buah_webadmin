@@ -205,7 +205,7 @@ class TransaksiController extends Controller
                      
                      ->join('detail_order','detail_order.order_id','=','order.id')
                      ->join('products','detail_order.product_id','=','products.id','LEFT')
-                     ->select('subtotal','detail_order.qty','products.price_awal')
+                     ->select('subtotal','detail_order.qty','products.*')
                      ->where('order.status_order_id',5)
                      ->where('order.id',$value->id)
                      ->whereYear('order.created_at', '=', $year)
@@ -223,11 +223,12 @@ class TransaksiController extends Controller
                         $total_price = $qty * $item->price_awal;
                         $subtotal = $order->sum('subtotal');
                         $total=$subtotal - $total_price;
-                        // dd($qty);
+                        // dd($orderDetail);
                     }
                 }
         $data = array(
             'laporan' =>$order,
+            'detail' =>$orderDetail,
             'jual' =>$subtotal,
             'untung' =>$total
         );

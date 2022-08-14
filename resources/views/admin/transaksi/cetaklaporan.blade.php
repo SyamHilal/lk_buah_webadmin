@@ -52,7 +52,7 @@
 				<th>Pemesan</th>
 				{{-- <th>Catatan</th> --}}
 				<th>Nama Produk</th>
-				<th>Ongkir</th>
+				<th>Total Produk</th>
 				<th>Total Pesanan</th>
 				{{-- <th>Total Pendapatan/Laba</th> --}}
 				<th>Metode Pembayaran</th>
@@ -66,8 +66,13 @@
                                             <td>{{ $order->invoice }}</td>
                                             <td>{{ $order->nama_pemesan }}</td>
                                             {{-- <td>{{ $order->pesan }}</td> --}}
-                                            <td>Rp. {{ number_format($order->subtotal, 0, ',', '.') }}</td>
-                                            <td>Rp. {{ number_format($order->ongkir, 0, ',', '.') }}</td>
+                                            <td>@foreach ($detail as $details) 
+												{{ $details->name }}
+												@endforeach
+											</td>
+                                            <td>
+												{{ $order->qty }}
+											</td>
                                             <td>Rp. {{ number_format($order->ongkir + $order->subtotal, 0, ',', '.') }}</td>
                                             {{-- <td>{{ $order->ongkir  $order->subtotal }}</td> --}}
                                             <td>{{ $order->metode_pembayaran }}</td>
