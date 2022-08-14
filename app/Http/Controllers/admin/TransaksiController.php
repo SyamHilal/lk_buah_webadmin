@@ -111,17 +111,21 @@ class TransaksiController extends Controller
                     
                     ->join('detail_order','detail_order.order_id','=','order.id')
                     ->join('products','detail_order.product_id','=','products.id','LEFT')
-                    ->select('subtotal','products.price_awal')
+                    ->select('subtotal','detail_order.qty','products.price_awal')
                     ->where('order.status_order_id',5)
                     ->where('order.id',$value->id)
                     ->get();
                     // dd($orderDetail);
                     foreach ($orderDetail as $key => $item) {
                         if(empty($item->subtotal)){
-                            $total=$item->subtotal - 0;
+                            // $total=$item->subtotal - 0;
                         }else{
-                            $total=$item->subtotal - $item->price_awal;
+                            $qty = DB::table('detail_order', 'qty')->count();
+                            $total_price = $qty * $item->price_awal;
                         }
+                        $subtotal = DB::table('order', 'subtotal')->count() * $item->subtotal;
+                        $total=$subtotal - $total_price;
+                        
                     }
                     }
                     
