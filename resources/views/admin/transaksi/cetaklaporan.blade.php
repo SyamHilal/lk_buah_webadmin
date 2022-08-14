@@ -37,12 +37,12 @@
 		<tr>
 			<td>Penjualan</td>
 			<td>:</td>
-			<td>{{ $jual }}</td>
+			<td> Rp. {{ number_format($jual, 0, ',', '.') }}</td>
 		</tr>
 		<tr>
 			<td>Pendapatan</td>
 			<td>:</td>
-			<td>{{ $untung }}</td>
+			<td>Rp. {{ number_format($untung, 0, ',', '.') }}</td>
 		</tr>
 	</table>
 	<table class="table table-bordered" style="border: 1px solid black, border-collapse: collapse">
@@ -66,9 +66,9 @@
                                             <td>{{ $order->invoice }}</td>
                                             <td>{{ $order->nama_pemesan }}</td>
                                             {{-- <td>{{ $order->pesan }}</td> --}}
-                                            <td>{{ $order->subtotal }}</td>
-                                            <td>{{ $order->ongkir }}</td>
-                                            <td>{{ $order->ongkir + $order->subtotal }}</td>
+                                            <td>Rp. {{ number_format($order->subtotal, 0, ',', '.') }}</td>
+                                            <td>Rp. {{ number_format($order->ongkir, 0, ',', '.') }}</td>
+                                            <td>Rp. {{ number_format($order->ongkir + $order->subtotal, 0, ',', '.') }}</td>
                                             {{-- <td>{{ $order->ongkir  $order->subtotal }}</td> --}}
                                             <td>{{ $order->metode_pembayaran }}</td>
                                             <td>{{ $order->no_resi ?? '-' }}</td>
