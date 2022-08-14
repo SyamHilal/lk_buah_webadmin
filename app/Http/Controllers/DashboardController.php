@@ -50,12 +50,17 @@ class DashboardController extends Controller
                             if(empty($item->price_awal)){
                                 $total=$item->subtotal - 0;
                             }else{
-                                $total=$item->subtotal - $item->price_awal;
+                                $qty = DB::table('detail_order')->sum('qty');
+                                $total_price = $qty * $item->price_awal;
                             }
+                            $subtotal = DB::table('order')->sum('subtotal');
+                            $total=$subtotal - $total_price;
+                            // dd($qty);
                         }
                         }
                         
         $data = array(
+            'penjualan' => $subtotal,
             'pendapatan' => $total,
             'transaksi'  => $transaksi,
             'pelanggan'  => $pelanggan,

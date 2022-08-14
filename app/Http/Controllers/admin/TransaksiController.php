@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Order;
+use Symfony\Component\Console\Input\Input;
+
 class TransaksiController extends Controller
 {
     public function index()
@@ -120,12 +122,12 @@ class TransaksiController extends Controller
                         if(empty($item->subtotal)){
                             // $total=$item->subtotal - 0;
                         }else{
-                            $qty = DB::table('detail_order', 'qty')->count();
+                            $qty = DB::table('detail_order')->sum('qty');
                             $total_price = $qty * $item->price_awal;
                         }
-                        $subtotal = DB::table('order', 'subtotal')->count() * $item->subtotal;
+                        $subtotal = DB::table('order')->sum('subtotal');
                         $total=$subtotal - $total_price;
-                        
+                        // dd($qty);
                     }
                     }
                     
@@ -133,8 +135,57 @@ class TransaksiController extends Controller
             'orderbaru' => $order,
             'total_pendapatan' => $total
         );
+       
 
         return view('admin.transaksi.selesai',$data);
+    }
+
+    public function cetak(Request $request){
+        $month = $request->get('month');
+	    $year = $request->get('year');
+        $lap_order = Order::whereYear('created_at', '=', $year)
+              ->whereMonth('created_at', '=', $month)
+              ->get();
+        // dd($lap_order);
+        $order = DB::table('order')
+                    ->join('status_order','status_order.id','=','order.status_order_id')
+                    ->join('users','users.id','=','order.user_id')
+                    ->select('order.*','status_order.name','users.name as nama_pemesan')
+                    ->where('order.status_order_id',5)
+                    ->whereYear('order.created_at', '=', $year)
+                    ->whereMonth('order.created_at', '=', $month)
+                    ->get();
+
+                     // dd($orderDetail);
+                     $total=0;
+                     foreach ($order as $key => $value) {
+                         $orderDetail = DB::table('order')
+                     
+                     ->join('detail_order','detail_order.order_id','=','order.id')
+                     ->join('products','detail_order.product_id','=','products.id','LEFT')
+                     ->select('subtotal','detail_order.qty','products.price_awal')
+                     ->where('order.status_order_id',5)
+                     ->where('order.id',$value->id)
+                     ->get();
+                    // dd($order);
+                    foreach ($orderDetail as $key => $item) {
+                        if(empty($item->subtotal)){
+                            // $total=$item->subtotal - 0;
+                        }else{
+                            $qty = DB::table('detail_order')->sum('qty');
+                            $total_price = $qty * $item->price_awal;
+                        }
+                        $subtotal = DB::table('order')->sum('subtotal');
+                        $total=$subtotal - $total_price;
+                        // dd($qty);
+                    }
+                }
+        $data = array(
+            'laporan' =>$order,
+            'jual' =>$subtotal,
+            'untung' =>$total
+        );
+                    return view('admin.transaksi.cetaklaporan',$data);           
     }
 
     public function dibatalkan()
