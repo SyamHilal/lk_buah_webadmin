@@ -17,12 +17,12 @@
                                 <h4 class="card-title">Data Pesanan Telah Selesai</h4>
                             </div>
                         </div>
-                        <div class="row mb-3">
+                        {{-- <div class="row mb-3">
                             <div class="col">
                                 <h4 class="card-title">Total Pendapatan/Laba : Rp
                                     {{ number_format($total_pendapatan, 2, ',', '.') }}</h4>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="card mx-auto border border-info mb-3" style="width: 100%">
                         <div class="header bg-info text-white text-center">Laporan Bulanan</div>
                         <form class="mt-2 ml-3" action="{{ route('admin.transaksi.cetak') }}" method="GET" class="form-group" id="formFilter">
