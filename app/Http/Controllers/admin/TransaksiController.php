@@ -84,52 +84,45 @@ class TransaksiController extends Controller
 
     public function selesai(Request $request)
     {
-        //ambil data order yang status nya 5 barang sudah diterima pelangan
-            // dd($request->some_param);
-            if($request->has('some_param')){
-                $order = DB::table('order')
-                ->join('status_order','status_order.id','=','order.status_order_id')
-                ->join('users','users.id','=','order.user_id')
-                ->select('order.*','status_order.name','users.name as nama_pemesan')
-                ->whereMonth('order.updated_at',$request->some_param)
-                ->where('order.status_order_id',5)
-                
-                ->get();
-                return response()->json([
-                    'data' => $order
-                ]);
-            }
         $order = DB::table('order')
                     ->join('status_order','status_order.id','=','order.status_order_id')
                     ->join('users','users.id','=','order.user_id')
-                    ->select('order.*','status_order.name','users.name as nama_pemesan')
-                    ->where('order.status_order_id',5)
-                    ->get();
-        
-                    // dd($orderDetail);
-                    $total=0;
-                    foreach ($order as $key => $value) {
-                        $orderDetail = DB::table('order')
-                    
                     ->join('detail_order','detail_order.order_id','=','order.id')
-                    ->join('products','detail_order.product_id','=','products.id','LEFT')
-                    ->select('subtotal','detail_order.qty','products.price_awal')
+                    ->select('order.*','status_order.name','detail_order.qty','users.name as nama_pemesan',)
                     ->where('order.status_order_id',5)
-                    ->where('order.id',$value->id)
                     ->get();
-                    // dd($orderDetail);
+
+                     // dd($orderDetail);
+                     $total=0;
+                     foreach ($order as $key => $value) {
+                         $orderDetail = DB::table('order')
+                     
+                     ->join('detail_order','detail_order.order_id','=','order.id')
+                     ->join('products','detail_order.product_id','=','products.id','LEFT')
+                     ->selectRaw('sum(detail_order.qty * products.price_awal) as total')
+                    //  ->sum('qty * price_awal')
+                     ->where('order.status_order_id',5)
+                     ->get();
+                    // dd($order);
                     foreach ($orderDetail as $key => $item) {
                         if(empty($item->subtotal)){
                             // $total=$item->subtotal - 0;
                         }else{
-                            $qty = DB::table('detail_order')->sum('qty');
-                            $total_price = $qty * $item->price_awal;
+                            // $qty = DB::table('detail_order')->sum('qty');
+                            // $total_price = $qty * $item->price_awal;
                         }
+                        
+                    
+                        $total_awal = $item->total;
+                        // dd($total_awal);
+                        $subtotal = $order->sum('subtotal');
+                        // dd($total);
                         $subtotal = DB::table('order')->sum('subtotal');
-                        $total=$subtotal - $total_price;
-                        // dd($qty);
+                        $total=$subtotal - $total_awal;
+                        
                     }
-                    }
+
+                }
                     
         $data = array(
             'orderbaru' => $order,
@@ -145,38 +138,61 @@ class TransaksiController extends Controller
         $order = DB::table('order')
                     ->join('status_order','status_order.id','=','order.status_order_id')
                     ->join('users','users.id','=','order.user_id')
-                    ->join('detail_order','detail_order.order_id','=','order.id')
-                    ->select('order.*','status_order.name','detail_order.qty','users.name as nama_pemesan')
+                    ->select('order.*','users.name as nama_pemesan',)
                     ->where('order.status_order_id',5)
                     ->get();
 
-                     // dd($orderDetail);
+                    //  dd($order);
                      $total=0;
+                     $listProduk = [];
                      foreach ($order as $key => $value) {
                          $orderDetail = DB::table('order')
                      
                      ->join('detail_order','detail_order.order_id','=','order.id')
                      ->join('products','detail_order.product_id','=','products.id','LEFT')
-                     ->select('subtotal','detail_order.qty','products.*')
+                     ->select('products.name','detail_order.qty', 'order.id')
+                    //  ->selectRaw('sum(detail_order.qty * products.price_awal) as total')
                      ->where('order.status_order_id',5)
-                     ->where('order.id',$value->id)
+                    //  ->where('order.id', $value->id)
                      ->get();
-                    // dd($order);
-                    foreach ($orderDetail as $key => $item) {
+                    //  dd($orderDetail);
+                     
+                     foreach ($orderDetail as $key => $item) {
+                        $listProduk[$item->id] = $item->name;
+                        
                         if(empty($item->subtotal)){
                             // $total=$item->subtotal - 0;
                         }else{
                             // $qty = DB::table('detail_order')->sum('qty');
                             // $total_price = $qty * $item->price_awal;
                         }
-                        $qty = $order->sum('qty');
-                        $total_price = $qty * $item->price_awal;
-                        $subtotal = $order->sum('subtotal');
-                        $total=$subtotal - $total_price;
-                        $subtotal = DB::table('order')->sum('subtotal');
-                        $total=$subtotal - $total_price;
-                        // dd($order);
                     }
+                     $total_harga = DB::table('order')
+                     
+                     ->join('detail_order','detail_order.order_id','=','order.id')
+                     ->join('products','detail_order.product_id','=','products.id','LEFT')
+                     ->selectRaw('sum(detail_order.qty * products.price_awal) as total')
+                     ->where('order.status_order_id',5)
+                     ->get();
+                    // dd($orderDetail);
+                    foreach ($total_harga as $key => $item) {
+                        if(empty($item->subtotal)){
+                            // $total=$item->subtotal - 0;
+                        }else{
+                            // $qty = DB::table('detail_order')->sum('qty');
+                            // $total_price = $qty * $item->price_awal;
+                        }
+                        
+                    
+                        $total_awal = $item->total;
+                        // dd($total_awal);
+                        $subtotal = $order->sum('subtotal');
+                        // dd($total);
+                        $subtotal = DB::table('order')->sum('subtotal');
+                        $total=$subtotal - $total_awal;
+                        
+                    }
+
                 }
         $data = array(
             'laporan' =>$order,
@@ -184,54 +200,77 @@ class TransaksiController extends Controller
             'detail' =>$orderDetail,
             'untung' =>$total
         );
+        // dd($data);
                     return view('admin.transaksi.cetak',$data);           
     }
 
     public function cetak(Request $request){
         $month = $request->get('month');
 	    $year = $request->get('year');
-        $lap_order = Order::whereYear('created_at', '=', $year)
-              ->whereMonth('created_at', '=', $month)
-              ->get();
-        // dd($lap_order);
+        
         $order = DB::table('order')
-                    ->join('status_order','status_order.id','=','order.status_order_id')
-                    ->join('detail_order','detail_order.order_id','=','order.id')
-                    ->join('users','users.id','=','order.user_id')
-                    ->select('order.*','detail_order.qty','status_order.name','users.name as nama_pemesan')
-                    ->where('order.status_order_id',5)
-                    ->whereYear('order.created_at', '=', $year)
-                    ->whereMonth('order.created_at', '=', $month)
-                    ->get();
+        ->join('status_order','status_order.id','=','order.status_order_id')
+        ->join('users','users.id','=','order.user_id')
+        ->select('order.*','users.name as nama_pemesan',)
+        ->where('order.status_order_id',5)
+        ->whereYear('order.created_at', '=', $year)
+        ->whereMonth('order.created_at', '=', $month)
+        ->get();
 
-                     // dd($orderDetail);
-                     $total=0;
-                     foreach ($order as $key => $value) {
-                         $orderDetail = DB::table('order')
-                     
-                     ->join('detail_order','detail_order.order_id','=','order.id')
-                     ->join('products','detail_order.product_id','=','products.id','LEFT')
-                     ->select('subtotal','detail_order.qty','products.*')
-                     ->where('order.status_order_id',5)
-                     ->where('order.id',$value->id)
-                     ->whereYear('order.created_at', '=', $year)
-                     ->whereMonth('order.created_at', '=', $month)
-                     ->get();
-                    // dd($order);
-                    foreach ($orderDetail as $key => $item) {
-                        if(empty($item->subtotal)){
-                            // $total=$item->subtotal - 0;
-                        }else{
-                            
-                            
-                        }
-                        $qty = $order->sum('qty');
-                        $total_price = $qty * $item->price_awal;
-                        $subtotal = $order->sum('subtotal');
-                        $total=$subtotal - $total_price;
-                        // dd($orderDetail);
-                    }
-                }
+        //  dd($order);
+         $total=0;
+         $listProduk = [];
+         foreach ($order as $key => $value) {
+             $orderDetail = DB::table('order')
+         
+         ->join('detail_order','detail_order.order_id','=','order.id')
+         ->join('products','detail_order.product_id','=','products.id','LEFT')
+         ->select('products.name','detail_order.qty', 'order.id')
+        //  ->selectRaw('sum(detail_order.qty * products.price_awal) as total')
+         ->where('order.status_order_id',5)
+         ->whereYear('order.created_at', '=', $year)
+         ->whereMonth('order.created_at', '=', $month)
+         ->get();
+        //  dd($orderDetail);
+         
+         foreach ($orderDetail as $key => $item) {
+            $listProduk[$item->id] = $item->name;
+            
+            if(empty($item->subtotal)){
+                // $total=$item->subtotal - 0;
+            }else{
+                // $qty = DB::table('detail_order')->sum('qty');
+                // $total_price = $qty * $item->price_awal;
+            }
+        }
+         $total_harga = DB::table('order')
+         
+         ->join('detail_order','detail_order.order_id','=','order.id')
+         ->join('products','detail_order.product_id','=','products.id','LEFT')
+         ->selectRaw('sum(detail_order.qty * products.price_awal) as total')
+         ->where('order.status_order_id',5)
+         ->whereYear('order.created_at', '=', $year)
+         ->whereMonth('order.created_at', '=', $month)
+         ->get();
+        // dd($orderDetail);
+        foreach ($total_harga as $key => $item) {
+            if(empty($item->subtotal)){
+                // $total=$item->subtotal - 0;
+            }else{
+                // $qty = DB::table('detail_order')->sum('qty');
+                // $total_price = $qty * $item->price_awal;
+            }
+            
+        
+            $total_awal = $item->total;
+            // dd($total_awal);
+            $subtotal = $order->sum('subtotal');
+            // dd($total);
+            $total=$subtotal - $total_awal;
+            // dd($total);
+        }
+
+    }
         $data = array(
             'laporan' =>$order,
             'detail' =>$orderDetail,
