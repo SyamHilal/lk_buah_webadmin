@@ -361,7 +361,7 @@
               <a class="nav-link" data-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic2">
                 <span class="menu-title">Pengaturan</span>
                 <i class="menu-arrow"></i>
-                <i class="mdi mdi-shopping menu-icon"></i>
+                <i class="mdi mdi-settings menu-icon"></i>
               </a>
               <div class="collapse" id="ui-basic2">
                 <ul class="nav flex-column sub-menu">
