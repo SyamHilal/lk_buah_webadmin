@@ -54,7 +54,7 @@ class DashboardController extends Controller
                                 $total_price = $qty * $item->price_awal;
                             }
                             $total_harga = DB::table('order')
-                     
+                    ->join('status_order','status_order.id','=','order.status_order_id')
                      ->join('detail_order','detail_order.order_id','=','order.id')
                      ->join('products','detail_order.product_id','=','products.id','LEFT')
                      ->selectRaw('sum(detail_order.qty * products.price_awal) as total')
