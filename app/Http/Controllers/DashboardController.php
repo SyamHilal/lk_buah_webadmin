@@ -53,11 +53,34 @@ class DashboardController extends Controller
                                 $qty = DB::table('detail_order')->sum('qty');
                                 $total_price = $qty * $item->price_awal;
                             }
-                            $subtotal = DB::table('order')->sum('subtotal');
-                            $total=$subtotal - $total_price;
-                            // dd($qty);
+                            $total_harga = DB::table('order')
+                     
+                     ->join('detail_order','detail_order.order_id','=','order.id')
+                     ->join('products','detail_order.product_id','=','products.id','LEFT')
+                     ->selectRaw('sum(detail_order.qty * products.price_awal) as total')
+                     ->where('order.status_order_id',5)
+                     ->get();
+                    // dd($orderDetail);
+                    foreach ($total_harga as $key => $item) {
+                        if(empty($item->subtotal)){
+                            // $total=$item->subtotal - 0;
+                        }else{
+                            // $qty = DB::table('detail_order')->sum('qty');
+                            // $total_price = $qty * $item->price_awal;
                         }
+                        
+                    
+                        $total_awal = $item->total;
+                        // dd($total_awal);
+                        $subtotal = $order->sum('subtotal');
+                        // dd($total);
+                        $subtotal = DB::table('order')->sum('subtotal');
+                        $total=$subtotal - $total_awal;
                         }
+                    }
+                }
+            
+                        
                         
         $data = array(
             'penjualan' => $subtotal,
