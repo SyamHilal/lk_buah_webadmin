@@ -79,7 +79,7 @@
                                             {{-- <td>
 												{{ $order->qty }}
 											</td> --}}
-                                            <td>Rp. {{ number_format($order->ongkir + $order->subtotal, 0, ',', '.') }}</td>
+                                            <td>Rp. {{ number_format($order->subtotal, 0, ',', '.') }}</td>
                                             {{-- <td>{{ $order->ongkir  $order->subtotal }}</td> --}}
                                             <td>{{ $order->metode_pembayaran }}</td>
                                             <td>{{ $order->no_resi ?? '-' }}</td>
