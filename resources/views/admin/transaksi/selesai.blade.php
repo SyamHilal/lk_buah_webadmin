@@ -163,11 +163,6 @@
                     cell.innerHTML = i + 1;
                 });
             }).draw();
-            $('#tag_select').change(function() {
-                
-              var data=$(this).val();
-                $('#tableSelesai').DataTable().ajax.url("?some_param=" + data).load();
-            })
         });
     </script>
 @endsection

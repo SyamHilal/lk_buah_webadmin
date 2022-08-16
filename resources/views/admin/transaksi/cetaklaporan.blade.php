@@ -37,12 +37,12 @@
 		<tr>
 			<td>Penjualan</td>
 			<td>:</td>
-			<td> Rp. {{ number_format($jual, 0, ',', '.') }}</td>
+			<td> Rp. @if (isset($jual)) {{ number_format($jual, 0, ',', '.') }} @else 0 @endif</td>
 		</tr>
 		<tr>
 			<td>Pendapatan</td>
 			<td>:</td>
-			<td>Rp. {{ number_format($untung, 0, ',', '.') }}</td>
+			<td>Rp. @if (isset($untung)) {{ number_format($untung, 0, ',', '.') }} @else 0 @endif</td>
 		</tr>
 	</table>
 	<table class="table table-bordered" style="border: 1px solid black, border-collapse: collapse">
@@ -60,28 +60,35 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach ($laporan as $order)
-                                        <tr>
-                                            <td>{{ $order->invoice }}</td>
-                                            <td>{{ $order->nama_pemesan }}</td>
-                                            {{-- <td>{{ $order->pesan }}</td> --}}
-											<td> 
-												<ul>
-													@foreach ($detail as $details)
-													@if ($order->id == $details->id)
-												<li>{{ $details->name}} ({{ $details->qty}})</li>
-												
-													@endif
-												@endforeach
-											</ul>
-											</td>
-                                            <td>Rp. {{ number_format($order->subtotal, 0, ',', '.') }}</td>
-                                            {{-- <td>{{ $order->ongkir  $order->subtotal }}</td> --}}
-                                            <td>{{ $order->metode_pembayaran }}</td>
-                                            <td>{{ $order->no_resi ?? '-' }}</td>
-                                            <td>{{ $order->updated_at }}</td>
-                                        </tr>
-                                    @endforeach
+			@if (is_null($laporan))
+				<tr>
+					<td colspan="7">
+						Data Tidak Tersedia
+					</td>
+				</tr>
+			@else
+				@foreach ($laporan as $order)
+					<tr>
+						<td>{{ $order->invoice }}</td>
+						<td>{{ $order->nama_pemesan }}</td>
+						{{-- <td>{{ $order->pesan }}</td> --}}
+						<td> 
+							<ul>
+								@foreach ($detail as $details)
+									@if ($order->id == $details->id)
+										<li>{{ $details->name}} ({{ $details->qty}})</li>
+									@endif
+								@endforeach
+							</ul>
+						</td>
+						<td>Rp. {{ number_format($order->subtotal, 0, ',', '.') }}</td>
+						{{-- <td>{{ $order->ongkir  $order->subtotal }}</td> --}}
+						<td>{{ $order->metode_pembayaran }}</td>
+						<td>{{ $order->no_resi ?? '-' }}</td>
+						<td>{{ $order->updated_at }}</td>
+					</tr>
+				@endforeach
+			@endif
 	</table>
 	<table width="95%" class="mt-4">
 		<tr>
