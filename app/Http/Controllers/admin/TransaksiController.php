@@ -237,7 +237,9 @@ class TransaksiController extends Controller
         $total = 0;
         $listProduk = [];
 
-        if ($order != []) {
+        if (count($order) === 0) {
+        //  dd($order);
+
             $data = array(
                 'laporan' => null
             );
